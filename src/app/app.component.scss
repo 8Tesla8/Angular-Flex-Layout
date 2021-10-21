@@ -1,0 +1,29 @@
+.container{
+    border: black;
+    border-style: solid;
+    width: 550px;
+    height: 400px;
+
+    .item{
+        /* Center vertically and horizontally */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+
+.big-container{
+    border: black;
+    border-style: solid;
+    width: 1450px;
+    height: 550px;
+
+    .big-item{
+        border: black;
+        border-style: solid;
+        width: 250px;
+        height: 450px;
+        background-color: gold;
+    }
+}
