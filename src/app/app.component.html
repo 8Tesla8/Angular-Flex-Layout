@@ -1,25 +1,24 @@
 <div>
   <h1>fxLayout</h1>
-  <select [(ngModel)]="alignmentHorizontal">
-    <option *ngFor="let opt of alignmentHorizontalSelectOptions" value="{{opt}}">{{opt}}</option>
-  </select>
+  
+  <div *ngFor="let flexLayoutModel of simpleFlexLayoutModel">
+    <h2>fxLayout="{{flexLayoutModel.layoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}" </h2>
 
+    <select [(ngModel)]="flexLayoutModel.horizontalAlignment">
+      <option *ngFor="let opt of alignmentHorizontalSelectOptions" value="{{opt}}">{{opt}}</option>
+    </select>
+  
+    <select [(ngModel)]="flexLayoutModel.verticalAlignment">
+      <option *ngFor="let opt of alignmentVerticalSelectOptions" value="{{opt}}">{{opt}}</option>
+    </select>
 
-  <select [(ngModel)]="alignmentVertical">
-    <option *ngFor="let opt of alignmentVerticalSelectOptions" value="{{opt}}">{{opt}}</option>
-  </select>
-
-  <div *ngFor="let type of layoutType">
-
-    <h2>fxLayout="{{type}}" fxLayoutAlign="{{alignmentHorizontal}} {{alignmentVertical}}" </h2>
-
-    <div class="container" fxLayout="{{type}}" fxLayoutAlign="{{alignmentHorizontal}} {{alignmentVertical}}">
-      <div *ngFor="let numb of countItems" class="item" [ngStyle]="{
-        'background-color': colors[numb],
-        'width': paramWidth[numb],
-        'height' : paramHeight[numb]
+    <div class="container" fxLayout="{{flexLayoutModel.layoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}">
+      <div *ngFor="let settings of itemSettings" class="item" [ngStyle]="{
+        'background-color': settings.color,
+        'width': settings.width,
+        'height' : settings.height
       }">
-        {{numb +1}}
+        {{settings.value}}
       </div>
     </div>
 
@@ -27,64 +26,35 @@
 
 </div>
 
-<div>
-  <h2>row INNER column</h2>
-  <h3>fxLayout="row" fxLayoutAlign="{{alignmentHorizontalInner1}} {{alignmentVerticalInner1}}" INNER fxLayout="column"
-    fxLayoutAlign="{{alignmentHorizontalInner1}} {{alignmentVerticalInner1}}" </h3>
 
-  <select [(ngModel)]="alignmentHorizontalInner1">
+<div *ngFor="let flexLayoutModel of complexFlexLayoutModel">
+  <h2>fxLayout="{{flexLayoutModel.layoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}" 
+    INNER fxLayout="{{flexLayoutModel.innerLayoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}" </h2>
+
+  <select [(ngModel)]="flexLayoutModel.horizontalAlignment">
     <option *ngFor="let opt of alignmentHorizontalSelectOptions" value="{{opt}}">{{opt}}</option>
   </select>
 
-  <select [(ngModel)]="alignmentVerticalInner1">
+  <select [(ngModel)]="flexLayoutModel.verticalAlignment">
     <option *ngFor="let opt of alignmentVerticalSelectOptions" value="{{opt}}">{{opt}}</option>
   </select>
 
-  <div class="big-container" fxLayout="row" fxLayoutAlign="{{alignmentHorizontalInner1}} {{alignmentVerticalInner1}}">
-    <div *ngFor="let numb of countItems" class="big-item">
-      <span *ngIf="numb != 2">{{numb +1}} </span>
+  <div class="big-container" fxLayout="{{flexLayoutModel.layoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}">
+    <div *ngFor="let settings of itemSettings" [ngClass]="flexLayoutModel.bigItemsClass" >
+      <span *ngIf="settings.value != 3">{{settings.value}} </span>
 
-      <div *ngIf="numb == 2" fxLayout="column" fxLayoutAlign="{{alignmentHorizontalInner1}} {{alignmentVerticalInner1}}">
-        <div *ngFor="let numb of countItems" class="item" [ngStyle]="{
-        'background-color': colors[numb],
-        'width': paramWidth[numb],
-        'height' : paramHeight[numb]
-      }">
-          {{numb +1}}
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-<div>
-  <h2>column INNER row</h2>
-  <h3>fxLayout="column" fxLayoutAlign="{{alignmentHorizontalInner2}} {{alignmentVerticalInner2}}" INNER fxLayout="row"
-    fxLayoutAlign="{{alignmentHorizontalInner2}} {{alignmentVerticalInner2}}" </h3>
-
-  <select [(ngModel)]="alignmentHorizontalInner2">
-    <option *ngFor="let opt of alignmentHorizontalSelectOptions" value="{{opt}}">{{opt}}</option>
-  </select>
-
-  <select [(ngModel)]="alignmentVerticalInner2">
-    <option *ngFor="let opt of alignmentVerticalSelectOptions" value="{{opt}}">{{opt}}</option>
-  </select>
-
-  <div class="big-container" fxLayout="column" fxLayoutAlign="{{alignmentHorizontalInner2}} {{alignmentVerticalInner2}}">
-    <div *ngFor="let numb of countItems" class="big-item">
-      <span *ngIf="numb != 2">{{numb +1}} </span>
-
-      <div *ngIf="numb == 2" fxLayout="row" fxLayoutAlign="{{alignmentHorizontalInner2}} {{alignmentVerticalInner2}}">
-        <div *ngFor="let numb of countItems" class="item" [ngStyle]="{
-          'background-color': colors[numb],
-          'width': paramWidth[numb],
-          'height' : paramHeight[numb]
+      <div *ngIf="settings.value == 3" fxLayout="{{flexLayoutModel.innerLayoutType}}" fxLayoutAlign="{{flexLayoutModel.horizontalAlignment}} {{flexLayoutModel.verticalAlignment}}">
+        <div *ngFor="let settings of itemSettings" class="item" [ngStyle]="{
+          'background-color': settings.color,
+          'width': settings.width,
+          'height' : settings.height
         }">
-          {{numb +1}}
+          {{settings.value}}
         </div>
       </div>
+
     </div>
   </div>
+
 </div>
+

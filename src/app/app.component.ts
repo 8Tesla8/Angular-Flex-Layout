@@ -3,47 +3,88 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  
-  public alignmentHorizontal: string;
-  public alignmentHorizontalInner1: string;
-  public alignmentHorizontalInner2: string;
   public alignmentHorizontalSelectOptions: string[] = [];
-
-  public alignmentVertical: string;
-  public alignmentVerticalInner1: string;
-  public alignmentVerticalInner2: string;
   public alignmentVerticalSelectOptions: string[] = [];
 
-  public countItems: number[];
-  public colors: string[] =[];
+  public itemSettings: ItemSettings[];
+  public simpleFlexLayoutModel: SimpleFlexLayoutModel[];
+  public complexFlexLayoutModel: ComplexFlexLayoutModel[];
 
-  public layoutType: string[];
-  public paramWidth: string[];
-  public paramHeight: string[];
-
-  constructor(){
-    this.countItems = Array(5).fill(0).map((x,i)=>i);
-
-    this.paramWidth = [ "60px","80px", "70px", "90px","50px"];
-    this.paramHeight = [ "90px","70px", "50px", "80px","60px"]; 
-    
-    this.colors = ["green", "red", "blue", "orange", "grey" ];
-    
-
-    this.layoutType = ["row", "column"];
-
-    this.alignmentHorizontal = this.alignmentHorizontalInner1 = this.alignmentHorizontalInner2 ="start"; // default
-    this.alignmentHorizontalSelectOptions = [
-      "none", "start", "center", "end", "space-around", "space-between", "space-evenly"
+  constructor() {
+    this.itemSettings = [
+      { color: 'green', width: '60px', height: '85px', value: 1, index: 0 },
+      { color: 'red', width: '80px', height: '70px', value: 2, index: 1 },
+      { color: 'blue', width: '70px', height: '50px', value: 3, index: 2 },
+      { color: 'orange', width: '85px', height: '80px', value: 4, index: 3 },
+      { color: 'grey', width: '50px', height: '60px', value: 5, index: 4 },
     ];
 
-    this.alignmentVertical = this.alignmentVerticalInner1 = this.alignmentVerticalInner2 =  "stretch"; // default
+    this.simpleFlexLayoutModel = [
+      {
+        layoutType: 'row',
+        horizontalAlignment: 'start',
+        verticalAlignment: 'stretch',
+      },
+      {
+        layoutType: 'column',
+        horizontalAlignment: 'start',
+        verticalAlignment: 'stretch',
+      },
+    ];
+
+    this.complexFlexLayoutModel = [
+      {
+        layoutType: 'row',
+        innerLayoutType: 'column',
+        horizontalAlignment: 'start',
+        verticalAlignment: 'stretch',
+        bigItemsClass: 'big-height-item',
+      },
+      {
+        layoutType: 'column',
+        innerLayoutType: 'row',
+        horizontalAlignment: 'start',
+        verticalAlignment: 'stretch',
+        bigItemsClass: 'big-width-item',
+      },
+    ];
+
+    this.alignmentHorizontalSelectOptions = [
+      'none',
+      'start',
+      'center',
+      'end',
+      'space-around',
+      'space-between',
+      'space-evenly',
+    ];
     this.alignmentVerticalSelectOptions = [
-      "none", "start", "center", "end", "stretch"
+      'none',
+      'start',
+      'center',
+      'end',
+      'stretch',
     ];
   }
+}
 
+export class ItemSettings {
+  public color: string;
+  public width: string;
+  public height: string;
+  public value: number;
+  public index: number;
+}
+export class SimpleFlexLayoutModel {
+  public layoutType: string;
+  public horizontalAlignment: string;
+  public verticalAlignment: string;
+}
+
+export class ComplexFlexLayoutModel extends SimpleFlexLayoutModel {
+  public innerLayoutType: string;
+  public bigItemsClass: string;
 }
